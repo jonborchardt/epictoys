@@ -7,6 +7,10 @@ public class Unit : MonoBehaviour
     [SerializeField] private Animator unitAnimator;
     private Vector3 targetPosition;
 
+    private void Awake() {
+        targetPosition = this.transform.position;
+    }
+
     private void Update(){
         float stoppingDistance = 0.1f;
         if(Vector3.Distance(targetPosition, transform.position) > stoppingDistance){
