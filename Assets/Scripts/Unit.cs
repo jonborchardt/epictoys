@@ -20,12 +20,9 @@ public class Unit : MonoBehaviour
         } else {
             unitAnimator.SetFloat("IsWalking", 0);
         }
-        if(Input.GetMouseButtonDown(0)){
-            Move(MouseWorld.GetPosition());
-        }
     }
 
-    void Move(Vector3 targetPosition){
+    public void Move(Vector3 targetPosition){
         this.targetPosition = targetPosition;
     }
 }
