@@ -14,6 +14,12 @@ public class Unit : MonoBehaviour
         targetPosition = this.transform.position;
     }
 
+    private void Start()
+    {
+        var gridPosition = LevelGrid.Instance.GetGridPosition(transform.position);
+        LevelGrid.Instance.SetUnitAtGridPosition(gridPosition, this);
+    }
+
     private void Update()
     {
         float stoppingDistance = 0.1f;

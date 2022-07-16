@@ -17,7 +17,7 @@ public class UnitActionSystem : MonoBehaviour
 
     void Awake()
     {
-        if (Instance != null)
+        if (Instance != null && Instance != this)
         {
             Debug
                 .LogError("There is more than one UnitActionSystem " +
