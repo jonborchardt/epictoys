@@ -9,6 +9,8 @@ public class Unit : MonoBehaviour
 
     private Vector3 targetPosition;
 
+    private GridPosition gridPosition;
+
     private void Awake()
     {
         targetPosition = this.transform.position;
@@ -16,8 +18,8 @@ public class Unit : MonoBehaviour
 
     private void Start()
     {
-        var gridPosition = LevelGrid.Instance.GetGridPosition(transform.position);
-        LevelGrid.Instance.SetUnitAtGridPosition(gridPosition, this);
+        gridPosition = LevelGrid.Instance.GetGridPosition(transform.position);
+        LevelGrid.Instance.AddUnitAtGridPosition(gridPosition, this);
     }
 
     private void Update()
@@ -44,6 +46,16 @@ public class Unit : MonoBehaviour
         else
         {
             unitAnimator.SetFloat("IsWalking", 0);
+        }
+
+        GridPosition newGridPosition =
+            LevelGrid.Instance.GetGridPosition(transform.position);
+        if (newGridPosition != gridPosition)
+        {
+            LevelGrid
+                .Instance
+                .UnitMoveGridPosition(this, gridPosition, newGridPosition);
+            gridPosition = newGridPosition;
         }
     }
 

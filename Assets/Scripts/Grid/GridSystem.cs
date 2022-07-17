@@ -45,7 +45,7 @@ public class GridSystem
         {
             for (int z = 0; z < height; z++)
             {
-                var gridPosition = new GridPosition(x,z);
+                var gridPosition = new GridPosition(x, z);
                 Transform debugTrasform =
                     GameObject
                         .Instantiate(debugPrefab,
