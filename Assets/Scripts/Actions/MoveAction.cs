@@ -1,12 +1,11 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MoveAction : MonoBehaviour
+public class MoveAction : BaseAction
 {
     private Vector3 targetPosition;
-
-    private Unit unit;
 
     [SerializeField]
     private Animator unitAnimator;
@@ -14,43 +13,52 @@ public class MoveAction : MonoBehaviour
     [SerializeField]
     private int maxMoveDistance;
 
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         targetPosition = this.transform.position;
-        unit = this.GetComponent<Unit>();
     }
 
     private void Update()
     {
+        if (!isActive)
+        {
+            return;
+        }
+
         float stoppingDistance = 0.1f;
+        Vector3 moveDirection =
+            (targetPosition - transform.position).normalized;
         if (
             Vector3.Distance(targetPosition, transform.position) >
             stoppingDistance
         )
         {
-            Vector3 moveDirection =
-                (targetPosition - transform.position).normalized;
             float moveSpeed = 4;
             transform.position += moveDirection * Time.deltaTime * moveSpeed;
-
-            float rotateSpeed = 10;
-            transform.forward =
-                Vector3
-                    .Lerp(transform.forward,
-                    moveDirection,
-                    rotateSpeed * Time.deltaTime);
             unitAnimator.SetFloat("IsWalking", 1);
         }
         else
         {
             unitAnimator.SetFloat("IsWalking", 0);
+            isActive = false;
+            onActionComplete();
         }
+
+        float rotateSpeed = 10;
+        transform.forward =
+            Vector3
+                .Lerp(transform.forward,
+                moveDirection,
+                rotateSpeed * Time.deltaTime);
     }
 
-    public void Move(GridPosition targetPosition)
+    public void Move(GridPosition targetPosition, Action onActionComplete)
     {
         this.targetPosition =
             LevelGrid.Instance.GetWorldPosition(targetPosition);
+        isActive = true;
+        this.onActionComplete = onActionComplete;
     }
 
     public bool IsValidActionGridPosition(GridPosition gridPosition)
