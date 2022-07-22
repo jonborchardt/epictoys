@@ -7,7 +7,6 @@ public class SpinAction : BaseAction
 {
     private float totalSpinAmount;
 
-    // Update is called once per frame
     void Update()
     {
         if (!isActive)

@@ -42,7 +42,17 @@ public class GridObject
         return gridPosition.ToString() + "\n" + unitString;
     }
 
-    public bool HasAnyUnit() {
+    public bool HasAnyUnit()
+    {
         return this.unitList.Count > 0;
+    }
+
+    public Unit GetUnit()
+    {
+        if (!HasAnyUnit())
+        {
+            return null;
+        }
+        return unitList[0];
     }
 }
