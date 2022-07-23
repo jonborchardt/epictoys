@@ -52,8 +52,11 @@ public class Unit : MonoBehaviour
 
     private void TurnSystem_OnTurnChange(object sender, EventArgs e)
     {
-        if((IsEnemy() && !TurnSystem.Instance.IsPlayerTurn()) ||
-        (!IsEnemy() && TurnSystem.Instance.IsPlayerTurn())) {
+        if (
+            (IsEnemy() && !TurnSystem.Instance.IsPlayerTurn()) ||
+            (!IsEnemy() && TurnSystem.Instance.IsPlayerTurn())
+        )
+        {
             actionPoints = actionPointsMax;
             OnAnyActionPointsChanged?.Invoke(this, EventArgs.Empty);
         }
@@ -72,6 +75,11 @@ public class Unit : MonoBehaviour
     public GridPosition GetGridPosition()
     {
         return gridPosition;
+    }
+
+    public Vector3 GetWorldPosition()
+    {
+        return transform.position;
     }
 
     public BaseAction[] GetBaseActionArray()
@@ -108,5 +116,10 @@ public class Unit : MonoBehaviour
     public int GetActionPoints()
     {
         return actionPoints;
+    }
+
+    public void Damage()
+    {
+        Debug.Log(transform + " dammaged!");
     }
 }
