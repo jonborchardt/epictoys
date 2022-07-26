@@ -14,6 +14,16 @@ public class UnitAnimator : MonoBehaviour
     [SerializeField]
     private Transform shootPointTransform;
 
+    private ShootAction.OnShootEventArgs lastShootArgs;
+
+    private HandOffAnimationEvent handOffAnimationEvent;
+
+    void OnEnable()
+    {
+        handOffAnimationEvent = GetComponentInChildren<HandOffAnimationEvent>();
+        handOffAnimationEvent.OnWeaponRelease += WeaponRelease;
+    }
+
     private void Awake()
     {
         if (TryGetComponent<MoveAction>(out MoveAction moveAction))
@@ -42,15 +52,21 @@ public class UnitAnimator : MonoBehaviour
         ShootAction.OnShootEventArgs e
     )
     {
+        // when this animation relesaes, we call WeaponRelease
         animator.SetTrigger("Shoot");
+        lastShootArgs = e;
+    }
 
+    // called via animation
+    private void WeaponRelease()
+    {
         Transform bulletProjectileTransform =
             Instantiate(bulletProjectilePrefab,
             shootPointTransform.position,
             Quaternion.identity);
         BulletProjectile bulletProjectile =
             bulletProjectileTransform.GetComponent<BulletProjectile>();
-        Vector3 targetShootAtPos = e.TargetUnit.GetWorldPosition();
+        Vector3 targetShootAtPos = lastShootArgs.TargetUnit.GetWorldPosition();
 
         // note: will only shoot horizontally
         targetShootAtPos.y = shootPointTransform.position.y;
