@@ -20,6 +20,17 @@ public class CharacterTest : MonoBehaviour
                     { TalentId.PRS, 0 },
                     { TalentId.RSN, -1 },
                     { TalentId.WLL, 3 }
+                },
+                skills: new Dictionary<string, int>()
+                {
+                    { "Arts", 1 },
+                    { "Athletics", 1 },
+                    { "Expedition", 1 },
+                    { "Fieldcraft", 1 },
+                    { "Husbandry", 2 },
+                    { "Maneuvering", 1 },
+                    { "Marksman", 2 },
+                    { "Melee", 3 }
                 });
 
         Debug.Log("---Start Character Tests---");
