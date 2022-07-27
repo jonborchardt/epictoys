@@ -7,6 +7,9 @@ public class BulletProjectile : MonoBehaviour
     [SerializeField]
     private TrailRenderer trailRenderer;
 
+    [SerializeField]
+    private Transform bulletHitVfxPrefab;
+
     Vector3 targetPosition;
 
     public void SetUp(Vector3 targetPosition)
@@ -30,6 +33,9 @@ public class BulletProjectile : MonoBehaviour
             transform.position = targetPosition;
             trailRenderer.transform.parent = null;
             Destroy (gameObject);
+            Instantiate(bulletHitVfxPrefab,
+            targetPosition,
+            Quaternion.identity);
         }
     }
 }
