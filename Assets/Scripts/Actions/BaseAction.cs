@@ -16,6 +16,10 @@ public abstract class BaseAction : MonoBehaviour
         unit = this.GetComponent<Unit>();
     }
 
+    protected virtual void Start()
+    {
+    }
+
     public abstract string GetActionName();
 
     public abstract void TakeAction(

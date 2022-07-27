@@ -7,8 +7,12 @@ public class ShootAction : BaseAction
 {
     public event EventHandler<OnShootEventArgs> OnShoot;
 
-    public class OnShootEventArgs: EventArgs {
+    private UnitAnimator unitAnimator;
+
+    public class OnShootEventArgs : EventArgs
+    {
         public Unit TargetUnit;
+
         public Unit ShootingUnit;
     }
 
@@ -30,6 +34,19 @@ public class ShootAction : BaseAction
     private Unit targetUnit;
 
     private bool canShotBullet;
+
+    protected override void Awake()
+    {
+        base.Awake();
+
+        unitAnimator = this.unit.GetComponent<UnitAnimator>();
+    }
+
+    protected virtual void Start()
+    {
+        base.Start();
+        unitAnimator.OnWeaponRelease += UnitAnimator_OnWeaponRelease;
+    }
 
     void Update()
     {
@@ -91,8 +108,18 @@ public class ShootAction : BaseAction
 
     private void Shoot()
     {
-        OnShoot?.Invoke(this, new OnShootEventArgs{TargetUnit=targetUnit, ShootingUnit=unit});
-        targetUnit.Damage();
+        OnShoot?
+            .Invoke(this,
+            new OnShootEventArgs {
+                TargetUnit = targetUnit,
+                ShootingUnit = unit
+            });
+    }
+
+    // called after animation triggers release
+    private void UnitAnimator_OnWeaponRelease(object sender, EventArgs e)
+    {
+        targetUnit.Damage(40);
     }
 
     public override string GetActionName()
@@ -162,7 +189,7 @@ public class ShootAction : BaseAction
         Action onActionComplete
     )
     {
-        ActionStart(onActionComplete);
+        ActionStart (onActionComplete);
 
         targetUnit = LevelGrid.Instance.GetUnitAtGridPosition(gridPosition);
 

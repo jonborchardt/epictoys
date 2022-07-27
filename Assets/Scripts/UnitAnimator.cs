@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class UnitAnimator : MonoBehaviour
 {
+    public event EventHandler OnWeaponRelease;
+
     [SerializeField]
     private Animator animator;
 
@@ -71,5 +73,6 @@ public class UnitAnimator : MonoBehaviour
         // note: will only shoot horizontally
         targetShootAtPos.y = shootPointTransform.position.y;
         bulletProjectile.SetUp (targetShootAtPos);
+        OnWeaponRelease?.Invoke(this, EventArgs.Empty);
     }
 }
