@@ -139,6 +139,7 @@ GameObject:
   - component: {fileID: 4831869020487565070}
   - component: {fileID: 4831869020487565057}
   - component: {fileID: 8393724545700217420}
+  - component: {fileID: 3276986837659145874}
   - component: {fileID: 573259381905713461}
   - component: {fileID: 948397340999977027}
   - component: {fileID: 914441630166044844}
@@ -194,6 +195,21 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.5, y: 1.7, z: 0.5}
   m_Center: {x: 0, y: 1, z: 0}
+--- !u!114 &3276986837659145874
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4831869020487565071}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 722382abd3666564893218d4a914522c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ragdollPrefab: {fileID: 4831869020487565070, guid: a3cfc2444c625e541a6e9ab7dbcbaf5f,
+    type: 3}
+  originalRagdollRootBone: {fileID: 4831869021910997987}
 --- !u!114 &573259381905713461
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -259,6 +275,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 86c92bede6b8dca489d0a7a9dc06d142, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  health: 100
 --- !u!1001 &4831869021328732433
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -735,6 +752,12 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 4836741941791845547}
   m_SourcePrefab: {fileID: 100100000, guid: 11ffba29df14c054aa5a2695b18e9f59, type: 3}
+--- !u!4 &4831869021910997987 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 439852, guid: 11ffba29df14c054aa5a2695b18e9f59,
+    type: 3}
+  m_PrefabInstance: {fileID: 4831869021911428559}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &4831869021911048069 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 422474, guid: 11ffba29df14c054aa5a2695b18e9f59,
