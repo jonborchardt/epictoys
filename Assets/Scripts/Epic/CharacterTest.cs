@@ -41,7 +41,7 @@ public class CharacterTest : MonoBehaviour
         Debug.Log("---End Character Tests---");
 
         var rand = new System.Random();
-        int tries = 1000;
+        int tries = 10000;
         for (int va = -4; va <= 9; va++)
         {
             for (int level = 0; level <= 9; level++)
@@ -100,14 +100,7 @@ public class CharacterTest : MonoBehaviour
                     }
                     while (rolls < gmRolls);
                 }
-                if (
-                    true ||
-                    totalTriesToSuccessSkillOnly >=
-                    (
-                    totalTriesToSuccessSkillAndVav +
-                    totalTriesToSuccessSkillAndVas
-                    )
-                )
+                if (false)
                 {
                     Debug
                         .Log(va +
@@ -128,6 +121,17 @@ public class CharacterTest : MonoBehaviour
                             ", " +
                             totalTriesToSuccessSkillAndVas / tries
                         ));
+                }
+                if (true)
+                {
+                    Debug
+                        .Log(va +
+                        ", " +
+                        level +
+                        ", " +
+                        totalTriesToSuccessSkillOnly*10 / tries +
+                        ", " +
+                        totalTriesToSuccessSkillAndVav*10 / tries);
                 }
             }
         }
