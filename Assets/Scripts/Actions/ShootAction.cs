@@ -33,7 +33,7 @@ public class ShootAction : BaseAction
 
     private Unit targetUnit;
 
-    private bool canShotBullet;
+    private bool canShootBullet;
 
     protected override void Awake()
     {
@@ -70,10 +70,10 @@ public class ShootAction : BaseAction
                         rotateSpeed * Time.deltaTime);
                 break;
             case State.Shooting:
-                if (canShotBullet)
+                if (canShootBullet)
                 {
                     Shoot();
-                    canShotBullet = false;
+                    canShootBullet = false;
                 }
                 break;
             case State.Cooloff:
@@ -96,9 +96,11 @@ public class ShootAction : BaseAction
                 stateTimer = shootingStateTime;
                 break;
             case State.Shooting:
-                state = State.Cooloff;
-                float cooloffStateTime = 0.5f;
-                stateTimer = cooloffStateTime;
+                // no longes setting timer here,
+                // instead going after animation weapon release, see below
+                // state = State.Cooloff;
+                // float cooloffStateTime = 0.5f;
+                // stateTimer = cooloffStateTime;
                 break;
             case State.Cooloff:
                 ActionComplete();
@@ -120,6 +122,11 @@ public class ShootAction : BaseAction
     private void UnitAnimator_OnWeaponRelease(object sender, EventArgs e)
     {
         targetUnit.Damage(40);
+
+        // was in case State.Shooting, see above
+        state = State.Cooloff;
+        float cooloffStateTime = 0.5f;
+        stateTimer = cooloffStateTime;
     }
 
     public override string GetActionName()
@@ -194,12 +201,13 @@ public class ShootAction : BaseAction
         state = State.Aiming;
         float aimingStateTime = 1f;
         stateTimer = aimingStateTime;
-        canShotBullet = true;
+        canShootBullet = true;
 
-         ActionStart (onActionComplete);
+        ActionStart (onActionComplete);
     }
 
-    public Unit GetTargetUnit() {
+    public Unit GetTargetUnit()
+    {
         return targetUnit;
     }
 }
