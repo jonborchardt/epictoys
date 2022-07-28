@@ -4,14 +4,6 @@ Questions:
 -should Philtrology untrained be -10 or X?
 -Do masteries or grandmasteries add a +1 bonus?
 -Does Shielding use MGT for weapon damage
--I think that to go up in va, you roll 2d10 vs 2d10+va ... this makes it very hard
-my math says that you would only be better off increasing va when it is very low
-va -3 trying for skill level 4+
-va -2 trying for skill level 5+
-va -1 trying for skill level 6+
-va 0 trying for skill level 7+
-va 1 trying for skill level 9+
-va 2  never
 -
 
 */
