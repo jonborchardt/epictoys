@@ -1,4 +1,5 @@
 using System;
+using UnityEngine;
 
 public struct GridPosition : IEquatable<GridPosition>
 {
@@ -10,6 +11,11 @@ public struct GridPosition : IEquatable<GridPosition>
     {
         this.x = x;
         this.z = z;
+    }
+
+    public Vector3 ToVector3()
+    {
+        return new Vector3(x, 0, z);
     }
 
     public override bool Equals(object obj)

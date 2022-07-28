@@ -177,14 +177,11 @@ public class ShootAction : BaseAction
         return validGridPositionList;
     }
 
+    // todo: refactor this based on gridsystemvisual
     private bool isOffsetGridPositionIsInRange(GridPosition offsetGridPosition)
     {
-        int testDistance =
-            Mathf
-                .RoundToInt(Mathf
-                    .Sqrt(Mathf.Pow(Mathf.Abs(offsetGridPosition.x), 2) +
-                    Mathf.Pow(Mathf.Abs(offsetGridPosition.z), 2)));
-        if (testDistance > maxShootDistance)
+        if (Vector3.Magnitude(offsetGridPosition.ToVector3()) > maxShootDistance
+        )
         {
             return false;
         }
@@ -209,5 +206,10 @@ public class ShootAction : BaseAction
     public Unit GetTargetUnit()
     {
         return targetUnit;
+    }
+
+    public int GetMaxShootDistance()
+    {
+        return maxShootDistance;
     }
 }
