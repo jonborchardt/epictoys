@@ -25,8 +25,8 @@ public class SpinAction : BaseAction
 
     public override void TakeAction(GridPosition _, Action onActionComplete)
     {
-        ActionStart(onActionComplete);
         totalSpinAmount = 0;
+        ActionStart (onActionComplete);
     }
 
     public override string GetActionName()
@@ -41,5 +41,8 @@ public class SpinAction : BaseAction
         return new List<GridPosition> { unitGridPos };
     }
 
-    public override int GetActionPointsCost() {return 2;}
+    public override int GetActionPointsCost()
+    {
+        return 2;
+    }
 }

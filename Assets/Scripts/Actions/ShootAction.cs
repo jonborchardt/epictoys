@@ -189,13 +189,17 @@ public class ShootAction : BaseAction
         Action onActionComplete
     )
     {
-        ActionStart (onActionComplete);
-
         targetUnit = LevelGrid.Instance.GetUnitAtGridPosition(gridPosition);
 
         state = State.Aiming;
         float aimingStateTime = 1f;
         stateTimer = aimingStateTime;
         canShotBullet = true;
+
+         ActionStart (onActionComplete);
+    }
+
+    public Unit GetTargetUnit() {
+        return targetUnit;
     }
 }

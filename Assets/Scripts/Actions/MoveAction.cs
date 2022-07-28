@@ -57,12 +57,11 @@ public class MoveAction : BaseAction
         Action onActionComplete
     )
     {
-        ActionStart (onActionComplete);
-
         this.targetPosition =
             LevelGrid.Instance.GetWorldPosition(targetPosition);
 
         OnStartMoving?.Invoke(this, EventArgs.Empty);
+        ActionStart (onActionComplete);
     }
 
     public override List<GridPosition> GetValidGridPositionList()
