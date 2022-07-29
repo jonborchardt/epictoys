@@ -6,6 +6,7 @@ using UnityEngine;
 public abstract class BaseAction : MonoBehaviour
 {
     public static event EventHandler OnAnyActionStarted;
+
     public static event EventHandler OnAnyActionCompleted;
 
     protected bool isActive;
@@ -59,7 +60,33 @@ public abstract class BaseAction : MonoBehaviour
         OnAnyActionCompleted?.Invoke(this, EventArgs.Empty);
     }
 
-    public Unit GetUnit() {
+    public Unit GetUnit()
+    {
         return unit;
     }
+
+    public EnemyAiAction GetBestEnemyAiAction()
+    {
+        List<EnemyAiAction> enemyAiActionList = new List<EnemyAiAction>();
+        List<GridPosition> validActionGridPositionList =
+            GetValidGridPositionList();
+        foreach (GridPosition gridPosition in validActionGridPositionList)
+        {
+            EnemyAiAction enemyAiAction = GetEnemyAiAction(gridPosition);
+            enemyAiActionList.Add (enemyAiAction);
+        }
+
+        if (enemyAiActionList.Count > 0)
+        {
+            enemyAiActionList
+                .Sort((EnemyAiAction a, EnemyAiAction b) =>
+                    b.actionValue - a.actionValue);
+            return enemyAiActionList[0];
+        }
+
+        // no possible actions
+        return null;
+    }
+
+    public abstract EnemyAiAction GetEnemyAiAction(GridPosition gridPosition);
 }

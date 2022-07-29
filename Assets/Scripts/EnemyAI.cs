@@ -87,18 +87,35 @@ public class EnemyAI : MonoBehaviour
     private bool
     TryTakeEnemyAiAction(Unit enemyUnit, Action onEnemyActionComplete)
     {
-        SpinAction spinAction = enemyUnit.GetComponent<SpinAction>();
-        GridPosition actionGridPosition = enemyUnit.GetGridPosition();
-        if (!spinAction.IsValidActionGridPosition(actionGridPosition))
+        EnemyAiAction bestEnemyAiAction = null;
+        BaseAction bestBaseAction = null;
+        foreach (BaseAction baseAction in enemyUnit.GetBaseActionArray())
         {
-            return false;
+            if (!enemyUnit.CanSpendActionPointsToTakeAction(baseAction))
+            {
+                // canot afford this action
+                continue;
+            }
+            EnemyAiAction testEnemyAiAction = baseAction.GetBestEnemyAiAction();
+            if (
+                bestEnemyAiAction == null ||
+                (
+                testEnemyAiAction != null &&
+                testEnemyAiAction.actionValue > bestEnemyAiAction.actionValue
+                )
+            )
+            {
+                bestEnemyAiAction = testEnemyAiAction;
+                bestBaseAction = baseAction;
+            }
         }
-        if (!enemyUnit.TrySpendActionPointsToTakeAction(spinAction))
+        if (!enemyUnit.TrySpendActionPointsToTakeAction(bestBaseAction))
         {
             return false;
         }
 
-        spinAction.TakeAction (actionGridPosition, onEnemyActionComplete);
+        bestBaseAction
+            .TakeAction(bestEnemyAiAction.gridPosition, onEnemyActionComplete);
         return true;
     }
 }
