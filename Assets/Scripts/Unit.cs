@@ -16,12 +16,6 @@ public class Unit : MonoBehaviour
 
     private GridPosition gridPosition;
 
-    private MoveAction moveAction;
-
-    private SpinAction spinAction;
-
-    private ShootAction shootAction;
-
     private BaseAction[] baseActionArray;
 
     private const int actionPointsMax = 2;
@@ -32,9 +26,6 @@ public class Unit : MonoBehaviour
 
     private void Awake()
     {
-        moveAction = this.GetComponent<MoveAction>();
-        spinAction = this.GetComponent<SpinAction>();
-        shootAction = this.GetComponent<ShootAction>();
         baseActionArray = this.GetComponents<BaseAction>();
         healthSystem = this.GetComponent<HealthSystem>();
     }
@@ -77,19 +68,17 @@ public class Unit : MonoBehaviour
         }
     }
 
-    public MoveAction GetMoveAction()
+    public T GetAction<T>()
+        where T : BaseAction
     {
-        return moveAction;
-    }
-
-    public SpinAction GetSpinAction()
-    {
-        return spinAction;
-    }
-
-    public ShootAction GetShootAction()
-    {
-        return shootAction;
+        foreach (BaseAction baseAction in baseActionArray)
+        {
+            if (baseAction is T)
+            {
+                return (T) baseAction;
+            }
+        }
+        return null;
     }
 
     public GridPosition GetGridPosition()
@@ -154,7 +143,8 @@ public class Unit : MonoBehaviour
         OnAnyUnitDead?.Invoke(this, EventArgs.Empty);
     }
 
-    public float GetHealthNormalized() {
+    public float GetHealthNormalized()
+    {
         return healthSystem.GetHealthNormalized();
     }
 }
