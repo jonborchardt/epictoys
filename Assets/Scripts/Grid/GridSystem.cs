@@ -60,7 +60,7 @@ public class GridSystem<TGridObject>
                         Quaternion.identity);
                 GridDebugObject gridDebugObject =
                     debugTrasform.GetComponent<GridDebugObject>();
-                gridDebugObject.SetGridObject(GetGridObject(gridPosition) as GridObject);
+                gridDebugObject.SetGridObject(GetGridObject(gridPosition));
             }
         }
     }
