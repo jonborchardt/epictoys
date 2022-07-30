@@ -29,13 +29,45 @@ public class PathNode
         return gCost;
     }
 
+    public void SetGCost(int value)
+    {
+        gCost = value;
+        CalcFCost();
+    }
+
     public int GetHCost()
     {
         return hCost;
     }
 
+    public void SetHCost(int value)
+    {
+        hCost = value;
+        CalcFCost();
+    }
+
     public int GetFCost()
     {
         return fCost;
+    }
+
+    private void CalcFCost()
+    {
+        fCost = hCost + gCost;
+    }
+
+    public PathNode GetCameFromPathNode()
+    {
+        return cameFromPathNode;
+    }
+
+    public void SetCameFromPathNode(PathNode value)
+    {
+        cameFromPathNode = value;
+    }
+
+    public GridPosition GetGridPosition()
+    {
+        return gridPosition;
     }
 }
