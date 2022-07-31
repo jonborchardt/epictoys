@@ -34,14 +34,25 @@ public class Pathfinding : MonoBehaviour
             return;
         }
         Instance = this;
+    }
+
+    public void Setup(int width, int height, float cellSize)
+    {
+        this.width = width;
+        this.height = height;
+        this.cellSize = cellSize;
 
         gridSystem =
-            new GridSystem<PathNode>(10, //todo: we should only set the with of our grid once
-                10,
-                2f,
+            new GridSystem<PathNode>(width,
+                height,
+                cellSize,
                 (GridSystem<PathNode> g, GridPosition gridPosition) =>
                     new PathNode(gridPosition));
+
         gridSystem.CreateDebugObjects (gridDebugObjectPrefab);
+
+        GetNode(1, 0).SetIsWalkable(false);
+        GetNode(1, 1).SetIsWalkable(false);
     }
 
     public List<GridPosition>
@@ -85,6 +96,11 @@ public class Pathfinding : MonoBehaviour
             {
                 if (closedList.Contains(neighborNode))
                 {
+                    continue;
+                }
+                if (!neighborNode.IsWalkable())
+                {
+                    closedList.Add (neighborNode);
                     continue;
                 }
                 int tentitiveGCost =
