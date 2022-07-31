@@ -13,6 +13,9 @@ public class Pathfinding : MonoBehaviour
     [SerializeField]
     private Transform gridDebugObjectPrefab;
 
+    [SerializeField]
+    private LayerMask obsticlesLayerMask;
+
     private int width;
 
     private int height;
@@ -51,8 +54,27 @@ public class Pathfinding : MonoBehaviour
 
         gridSystem.CreateDebugObjects (gridDebugObjectPrefab);
 
-        GetNode(1, 0).SetIsWalkable(false);
-        GetNode(1, 1).SetIsWalkable(false);
+        for (int x = 0; x < width; x++)
+        {
+            for (int z = 0; z < height; z++)
+            {
+                GridPosition gridPosition = new GridPosition(x, z);
+                Vector3 worldPositon =
+                    LevelGrid.Instance.GetWorldPosition(gridPosition);
+                float raycastOffsetDistance = 5f;
+                if (
+                    Physics
+                        .Raycast(worldPositon +
+                        Vector3.down * raycastOffsetDistance,
+                        Vector3.up,
+                        raycastOffsetDistance * 2,
+                        obsticlesLayerMask)
+                )
+                {
+                    GetNode(x, z).SetIsWalkable(false);
+                }
+            }
+        }
     }
 
     public List<GridPosition>
@@ -64,9 +86,9 @@ public class Pathfinding : MonoBehaviour
         PathNode endNode = gridSystem.GetGridObject(endGridPosition);
         openList.Add (startNode);
 
-        for (int x = 0; x < gridSystem.GetWidth(); x++)
+        for (int x = 0; x < width; x++)
         {
-            for (int z = 0; z < gridSystem.GetHeight(); z++)
+            for (int z = 0; z < height; z++)
             {
                 PathNode pathNode =
                     gridSystem.GetGridObject(new GridPosition(x, z));
@@ -172,14 +194,14 @@ public class Pathfinding : MonoBehaviour
                 neighborList
                     .Add(GetNode(gridPosition.x - 1, gridPosition.z - 1));
             }
-            if (gridPosition.z + 1 < gridSystem.GetHeight())
+            if (gridPosition.z + 1 < height)
             {
                 // LeftUp
                 neighborList
                     .Add(GetNode(gridPosition.x - 1, gridPosition.z + 1));
             }
         }
-        if (gridPosition.x + 1 < gridSystem.GetWidth())
+        if (gridPosition.x + 1 < width)
         {
             // Right
             neighborList.Add(GetNode(gridPosition.x + 1, gridPosition.z + 0));
@@ -190,7 +212,7 @@ public class Pathfinding : MonoBehaviour
                 neighborList
                     .Add(GetNode(gridPosition.x + 1, gridPosition.z - 1));
             }
-            if (gridPosition.z + 1 < gridSystem.GetHeight())
+            if (gridPosition.z + 1 < height)
             {
                 // RightUp
                 neighborList
@@ -202,7 +224,7 @@ public class Pathfinding : MonoBehaviour
             // Down
             neighborList.Add(GetNode(gridPosition.x + 0, gridPosition.z - 1));
         }
-        if (gridPosition.z + 1 < gridSystem.GetHeight())
+        if (gridPosition.z + 1 < height)
         {
             // Up
             neighborList.Add(GetNode(gridPosition.x + 0, gridPosition.z + 1));
